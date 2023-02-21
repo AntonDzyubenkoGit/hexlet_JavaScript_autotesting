@@ -1,12 +1,14 @@
 import _ from 'lodash';
 
 const functions = {
-  right1: (items, n = 1) => _.take(items, n),
-  wrong1: (items, n = 1) => (n > 1 ? items.slice() : items.slice(0, n)),
-  wrong2: (items, n = 1) => (n <= items.length ? items.slice(0, n) : []),
-  wrong3: (items, n = 5) => items.slice(0, n),
-  wrong4: (items, n = 1) => (items.length === 0 ? [0] : items.slice(0, n)),
-  wrong5: (items, n = 1) => items.slice(0, n),
+  right1: (items, value, fromIndex = 0) => items.indexOf(value, fromIndex),
+  wrong1: (items, value, fromIndex = 1) => items.indexOf(value, fromIndex),
+  wrong2: (items, value, fromIndex) => {
+    const index = items.indexOf(value, fromIndex);
+    return index === -1 ? 0 : index;
+  },
+  wrong3: (items, value) => items.indexOf(value),
+  wrong4: (items, value) => _.lastIndexOf(items, value),
 };
 
 export default () => {

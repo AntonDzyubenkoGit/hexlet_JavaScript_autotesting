@@ -1,12 +1,16 @@
 import { strict as assert } from "assert";
 import getFunction from "../src/functions.js";
 
-const take = getFunction();
+const indexOf = getFunction();
 
-assert.deepEqual(take([], 2), []);
-assert.deepEqual(take([1, 2, 3]), [1]);
-assert.deepEqual(take([1, 2, 3]), [1]);
-assert.deepEqual(take([4, 3], 9), [4, 3]);
-assert.deepEqual(take([4, 3], -1), []);
+assert.deepEqual(indexOf([1, 2, 1, 2], 2), 1);
+assert.deepEqual(indexOf([1, 2, 1, 2], 2, 2), 3);
+assert.deepEqual(indexOf([1, 2, 1, 2], 10), -1);
+assert.deepEqual(indexOf([0], 0), 0);
+
+assert(indexOf([1, 2, 1, 2], 2) === 1);
+assert(indexOf([1, 2, 1, 2], 2, 2) === 3);
+assert(indexOf([1, 2, 1, 2], 10) === -1);
+assert(indexOf([0], 0) === 0);
 
 console.log("Done");
