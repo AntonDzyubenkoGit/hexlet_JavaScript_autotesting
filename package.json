@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/AntonDzyubenkoGit/hexlet_JavaScript_autotesting/issues"
   },
-  "homepage": "https://github.com/AntonDzyubenkoGit/hexlet_JavaScript_autotesting#readme"
+  "homepage": "https://github.com/AntonDzyubenkoGit/hexlet_JavaScript_autotesting#readme",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
 }
