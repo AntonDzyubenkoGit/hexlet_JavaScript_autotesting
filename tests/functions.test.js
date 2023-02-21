@@ -1,15 +1,12 @@
+import { strict as assert } from "assert";
 import getFunction from "../src/functions.js";
 
-const get = getFunction();
+const take = getFunction();
 
-if (get({ key: "value" }, "key") !== "value") {
-  throw new Error("Fail!");
-}
-if (get({}, "key", "value") !== "value") {
-  throw new Error("Fail!");
-}
-if (get({ key: "value" }, "key", "default value") !== "value") {
-  throw new Error("Fail!");
-}
+assert.deepEqual(take([], 2), []);
+assert.deepEqual(take([1, 2, 3]), [1]);
+assert.deepEqual(take([1, 2, 3]), [1]);
+assert.deepEqual(take([4, 3], 9), [4, 3]);
+assert.deepEqual(take([4, 3], -1), []);
 
-console.log("Done!!!");
+console.log("Done");
