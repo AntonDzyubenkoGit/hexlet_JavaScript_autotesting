@@ -1,0 +1,20 @@
+{
+  "name": "hexlet_javascript_autotesting",
+  "version": "1.0.0",
+  "description": "Мои решения задач для курса \"JS: Автоматическое тестирование\"",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntonDzyubenkoGit/hexlet_JavaScript_autotesting.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AntonDzyubenkoGit/hexlet_JavaScript_autotesting/issues"
+  },
+  "homepage": "https://github.com/AntonDzyubenkoGit/hexlet_JavaScript_autotesting#readme"
+}
