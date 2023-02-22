@@ -1,11 +1,10 @@
-import getFunction from "../src/functions.js";
+import getFunction from '../src/functions.js';
 
-const without = getFunction();
+const gt = getFunction();
 
-test("without", () => {
-  const arr = [1, 2, 3, 4, 5, 1, 2, 5];
-  const int1 = 1;
-  const int2 = 5;
-  expect(without([], int1)).toEqual([]);
-  expect(without(arr, int1, int2)).toEqual([2, 3, 4, 2]);
+test("gt", () => {
+  expect(gt(1, 3)).toBeFalsy();
+  expect(gt(3, 3)).toBeFalsy();
+  expect(gt()).toBeFalsy();
+  expect(gt(4, 3)).toBeTruthy();
 });
