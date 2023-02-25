@@ -1,37 +1,40 @@
-const makeDecartPoint = (x, y) => {
-  const point = { x, y };
+const makePoint = (x, y) => {
+  const point = {
+    angle: Math.atan2(y, x),
+    radius: Math.sqrt(x ** 2 + y ** 2),
+  };
+
   return point;
 };
 
-const getX = (point) => point.x;
+const x = 4;
+const y = 8;
+const point = makePoint(x, y);
 
-const getY = (point) => point.y;
+// Функции getX(), getY() - интерфейсные функции точек
 
-// Функция makeSegment(). Принимает на вход две точки и возвращает отрезок.
-// Функция getMidpointOfSegment(). Принимает на вход отрезок и возвращает точку находящуюся на середине отрезка.
-// Функция getBeginPoint(). Принимает на вход отрезок и возвращает точку начала отрезка.
-// Функция getEndPoint(). Принимает на вход отрезок и возвращает точку конца отрезка.
+const getX = (point) => {
+  const { angle, radius } = point;
+  const x = radius * Math.cos(angle);
 
-const makeSegment = (begin, end) => ({ begin, end });
-
-const getMidpointOfSegment = (segment) => {
-  const { begin, end } = segment;
-  const x = (getX(begin) + getX(end)) / 2;
-  const y = (getY(begin) + getY(end)) / 2;
-
-  return makeDecartPoint(x, y);
+  return Math.round(x);
 };
 
-const getBeginPoint = (segment) => segment.begin;
+const getY = (point) => {
+  const { angle, radius } = point;
+  const y = radius * Math.sin(angle);
 
-const getEndPoint = (segment) => segment.end;
+  return Math.round(y);
+};
 
-const beginPoint = makeDecartPoint(3, 2);
-const endPoint = makeDecartPoint(0, 0);
+console.log(getX(point));
+console.log(getY(point));
 
-const segment = makeSegment(makeDecartPoint(3, 2), makeDecartPoint(0, 0));
+// Решение с получением радиуса и угла в функциях getRadius(), getAngle()
+const getRadius = (point) => point.radius;
+const getAngle = (point) => point.angle;
+const getX1 = (point) => Math.round(getRadius(point) * Math.cos(getAngle(point)));
+const getY1 = (point) => Math.round(getRadius(point) * Math.sin(getAngle(point)));
 
-console.log(segment);
-console.log(getMidpointOfSegment(segment));
-console.log(getBeginPoint(segment));
-console.log(getEndPoint(segment));
+console.log(getX1(point));
+console.log(getY1(point));
