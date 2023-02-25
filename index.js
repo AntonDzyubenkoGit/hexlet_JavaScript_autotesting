@@ -1,40 +1,54 @@
-const makePoint = (x, y) => {
-  const point = {
-    angle: Math.atan2(y, x),
-    radius: Math.sqrt(x ** 2 + y ** 2),
-  };
-
+const makeDecartPoint = (x, y) => {
+  const point = { x, y };
   return point;
 };
 
-const x = 4;
-const y = 8;
-const point = makePoint(x, y);
+const getX = (point) => point.x;
 
-// Функции getX(), getY() - интерфейсные функции точек
+const getY = (point) => point.y;
 
-const getX = (point) => {
-  const { angle, radius } = point;
-  const x = radius * Math.cos(angle);
+const getQuadrant = (point) => {
+  const x = getX(point);
+  const y = getY(point);
 
-  return Math.round(x);
+  if (x > 0 && y > 0) {
+    return 1;
+  }
+  if (x < 0 && y > 0) {
+    return 2;
+  }
+  if (x < 0 && y < 0) {
+    return 3;
+  }
+  if (x > 0 && y < 0) {
+    return 4;
+  }
+
+  return null;
 };
 
-const getY = (point) => {
-  const { angle, radius } = point;
-  const y = radius * Math.sin(angle);
+/*======================================================================*/
 
-  return Math.round(y);
+const point = makeDecartPoint(-4, 3);
+
+const makeRectangle = (point, width, height) => {
+  const rectangle = { point, width, height };
+  return rectangle;
 };
 
-console.log(getX(point));
-console.log(getY(point));
+const getStartPoint = (rectangle) => rectangle.point;
+const getWidth = (rectangle) => rectangle.width;
+const getHeight = (rectangle) => rectangle.height;
 
-// Решение с получением радиуса и угла в функциях getRadius(), getAngle()
-const getRadius = (point) => point.radius;
-const getAngle = (point) => point.angle;
-const getX1 = (point) => Math.round(getRadius(point) * Math.cos(getAngle(point)));
-const getY1 = (point) => Math.round(getRadius(point) * Math.sin(getAngle(point)));
+const containsOrigin = (rectangle) => {
+  // Нужны только две вершины: начальная и лежащая по диагонали
+  const top1 = getStartPoint(rectangle);
+  const top2 = { x: getX(top1) + getWidth(rectangle), y: getY(top1) - getHeight(rectangle) };
 
-console.log(getX1(point));
-console.log(getY1(point));
+  // Если вершины лежат в плосткостях 2 и 4 , то две другие будут в плосткостях 1 и 3, это значит, что точка (0, 0) лежит внутри прямоугольника
+  return getQuadrant(top1) === 2 && getQuadrant(top2) === 4;
+};
+
+const rectangle = makeRectangle(point, 5, 4);
+
+console.log(containsOrigin(rectangle));
