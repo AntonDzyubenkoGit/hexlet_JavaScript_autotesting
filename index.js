@@ -1,14 +1,14 @@
 // Функция calculateDistance, которая находит расстояние между двумя точками на плоскости
 
-const calculateDistance = (point1, point2) => {
-  const ac = point2[0] - point1[0];
-  const bc = point2[1] - point1[1];
-  const distance = Math.sqrt(ac ** 2 + bc ** 2);
+const getMidpoint = (point1, point2) => {
+  const x = (point1.x + point2.x) / 2;
+  const y = (point1.y + point2.y) / 2;
 
-  return distance;
+  return {x, y};
 };
 
-const point1 = [1, 10];
-const point2 = [1, 3];
+const point1 = { x: -1, y: 10 };
+const point2 = { x: 0, y: -3 };
+const point3 = getMidpoint(point1, point2);
 
-console.log(calculateDistance(point1, point2));
+console.log(point3);
