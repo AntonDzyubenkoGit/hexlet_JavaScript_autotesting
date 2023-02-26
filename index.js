@@ -1,54 +1,85 @@
-const makeDecartPoint = (x, y) => {
-  const point = { x, y };
-  return point;
-};
+const getGcd = (a, b) => (a % b ? getGcd(b, a % b) : Math.abs(b));
+const ratToString = (rat) => `${getNumer(rat)}/${getDenom(rat)}`;
 
-const getX = (point) => point.x;
+// Конструктор makeRational() - принимает на вход числитель и знаменатель, возвращает дробь в виде объекта.
+// Селектор getNumer() - возвращает числитель
+// Селектор getDenom() - возвращает знаменатель
+// Сложение add() - складывает переданные дроби
+// Вычитание sub() - находит разность между двумя дробями
 
-const getY = (point) => point.y;
+const makeRational = (numer, denom) => ({ numer, denom });
+const getNumer = (numer) => numer.numer / getGcd(numer.numer, numer.denom);
+const getDenom = (numer) => numer.denom / getGcd(numer.numer, numer.denom);
 
-const getQuadrant = (point) => {
-  const x = getX(point);
-  const y = getY(point);
-
-  if (x > 0 && y > 0) {
-    return 1;
-  }
-  if (x < 0 && y > 0) {
-    return 2;
-  }
-  if (x < 0 && y < 0) {
-    return 3;
-  }
-  if (x > 0 && y < 0) {
-    return 4;
+const add = (rat1, rat2) => {
+  if (getDenom(rat1) === getDenom(rat2)) {
+    const numer = getNumer(rat1) + getNumer(rat2);
+    const denom = getDenom(rat1);
+    return { numer, denom };
   }
 
-  return null;
+  if (getGcd(getDenom(rat1), getDenom(rat2)) === 1) {
+    const multi = getDenom(rat1) * getDenom(rat2);
+    const firstMulti = getGcd(getDenom(rat1), multi);
+    const secondMulti = getGcd(getDenom(rat2), multi);
+
+    const numer = getNumer(rat1) * secondMulti + getNumer(rat2) * firstMulti;
+    const denom = multi;
+    return { numer, denom };
+  }
+
+  const multi = getGcd(getDenom(rat1), getDenom(rat2));
+  const denom = getDenom(rat1) * multi;
+  const firstMulti = denom / getDenom(rat1);
+  const secondMulti = denom / getDenom(rat2);
+  const numer = getNumer(rat1) * firstMulti + getNumer(rat2) * secondMulti;
+
+  return { numer, denom };
 };
 
-/*======================================================================*/
+const sub = (rat1, rat2) => {
+  if (getDenom(rat1) === getDenom(rat2)) {
+    let numer = getNumer(rat1) - getNumer(rat2);
+    let denom = getDenom(rat1);
+    if (getGcd(numer, denom) !== 1) {
+      numer = numer / getGcd(numer, denom);
+      denom = denom / getGcd(numer, denom);
+      return { numer, denom };
+    }
+    return { numer, denom };
+  }
 
-const point = makeDecartPoint(-4, 3);
+  if (getGcd(getDenom(rat1), getDenom(rat2)) === 1) {
+    const multi = getDenom(rat1) * getDenom(rat2);
+    const firstMulti = getGcd(getDenom(rat1), multi);
+    const secondMulti = getGcd(getDenom(rat2), multi);
 
-const makeRectangle = (point, width, height) => {
-  const rectangle = { point, width, height };
-  return rectangle;
+    const numer = getNumer(rat1) * secondMulti - getNumer(rat2) * firstMulti;
+    const denom = multi;
+    return { numer, denom };
+  }
+
+  const multi = getGcd(getDenom(rat1), getDenom(rat2));
+  const denom = getDenom(rat1) * multi;
+  const firstMulti = denom / getDenom(rat1);
+  const secondMulti = denom / getDenom(rat2);
+  const numer = getNumer(rat1) * firstMulti - getNumer(rat2) * secondMulti;
+
+  return { numer, denom };
 };
 
-const getStartPoint = (rectangle) => rectangle.point;
-const getWidth = (rectangle) => rectangle.width;
-const getHeight = (rectangle) => rectangle.height;
+const rat1 = makeRational(3, 9);
+const rat2 = makeRational(10, 3);
 
-const containsOrigin = (rectangle) => {
-  // Нужны только две вершины: начальная и лежащая по диагонали
-  const top1 = getStartPoint(rectangle);
-  const top2 = { x: getX(top1) + getWidth(rectangle), y: getY(top1) - getHeight(rectangle) };
+const rat3 = makeRational(-4, 16);
+const rat4 = makeRational(12, 5);
 
-  // Если вершины лежат в плосткостях 2 и 4 , то две другие будут в плосткостях 1 и 3, это значит, что точка (0, 0) лежит внутри прямоугольника
-  return getQuadrant(top1) === 2 && getQuadrant(top2) === 4;
-};
+const rat5 = makeRational(1, 15);
+const rat6 = makeRational(4, 25);
 
-const rectangle = makeRectangle(point, 5, 4);
-
-console.log(containsOrigin(rectangle));
+console.log(getNumer(rat1), getNumer(rat2));
+console.log(getDenom(rat1), getDenom(rat2));
+console.log(add(rat5, rat6));
+console.log(sub(rat5, rat6));
+console.log(ratToString(rat1));
+console.log(ratToString(rat3));
